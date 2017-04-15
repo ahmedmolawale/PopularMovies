@@ -1,9 +1,7 @@
 package com.android.root.popularmovies.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +11,6 @@ import android.widget.TextView;
 import com.android.root.popularmovies.R;
 import com.android.root.popularmovies.model.Movie;
 import com.squareup.picasso.Picasso;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -26,10 +21,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     List<Movie> movies;
     Context context;
+    private final OnListItemClickListener mOnListItemClickListener;
 
-    public MovieAdapter(Context context, List<Movie> movies){
+    public MovieAdapter(Context context, List<Movie> movies,OnListItemClickListener onListItemClickListener){
         this.context = context;
         this.movies = movies;
+        this.mOnListItemClickListener = onListItemClickListener;
+    }
+
+    //interface to handle clicks
+
+    public interface OnListItemClickListener{
+
+         void onListItemClick(int position);
     }
 
     @Override
@@ -47,7 +51,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieAdapter.MovieViewHolder holder, int position) {
-        //binding the view. A context is necessary for Picasso
             holder.bind(position);
     }
 
@@ -56,7 +59,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return this.movies.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder{
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private ImageView movieImage;
         private TextView movieTitle;
@@ -66,6 +69,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             movieImage = (ImageView) itemView.findViewById(R.id.movie_image);
             movieTitle = (TextView) itemView.findViewById(R.id.movie_name);
+            itemView.setOnClickListener(this);
         }
 
 
@@ -73,13 +77,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             //getting the movie at the binding position
             Movie movie = movies.get(position);
             //setting the movie title and the movie image
-            movieTitle.setText(movie.getTitle());
+            movieTitle.setText(movie.getOriginalTitle());
             String BASE_URL = "http://image.tmdb.org/t/p/";
             String IMAGE_SIZE = "w185/";
             String POSTER_PATH = movie.getPosterPath();
 
             String imageUrl =  BASE_URL.concat(IMAGE_SIZE).concat(POSTER_PATH);
             Picasso.with(context).load(imageUrl).into(movieImage);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mOnListItemClickListener.onListItemClick(position);
         }
     }
 }

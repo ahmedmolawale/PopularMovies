@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+>
+    <ImageView
+        android:id="@+id/movie_image_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/image_description"
+        android:src="@mipmap/ic_launcher_round"/>
+    <TextView
+        android:id="@+id/movie_name_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/movie_name"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent"
+            />
+    <TextView
+        android:id="@+id/movie_overview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textStyle="italic"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/movie_overview"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorAccent"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_rating"
+            android:textSize="17sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/user_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_rating"
+            android:textSize="17sp"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/release_date"
+            android:textSize="17sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/release_date"
+            android:textSize="17sp"
+            />
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

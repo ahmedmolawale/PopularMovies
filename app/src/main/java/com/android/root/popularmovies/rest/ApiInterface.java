@@ -19,8 +19,8 @@ public interface ApiInterface {
      *
      *
      * Defines a method signature to simulate the HTTP GET request with @GET annotation
-     * @params sort_by
-     * @params apiKey
+     * @param  sort_by
+     * @param apiKey
      *
      */
     @GET("/3/movie/{sort_by}")
