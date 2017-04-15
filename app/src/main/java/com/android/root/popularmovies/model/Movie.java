@@ -1,6 +1,8 @@
 
 package com.android.root.popularmovies.model;
 
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;

@@ -15,35 +15,30 @@ import com.android.root.popularmovies.R;
 import com.android.root.popularmovies.model.Movie;
 import com.squareup.picasso.Picasso;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class MovieDetails extends AppCompatActivity {
 
-    private ImageView mMovieImage;
-    private TextView mMovieTitle;
-    private TextView mMovieOverview;
-    private TextView mUserRating;
-    private TextView mReleaseDate;
-    private Movie movie;
+     @InjectView(R.id.movie_image_detail) ImageView mMovieImage;
+    @InjectView(R.id.movie_name_detail) TextView mMovieTitle;
+     @InjectView(R.id.movie_overview) TextView mMovieOverview;
+    @InjectView(R.id.user_rating) TextView mUserRating;
+     @InjectView(R.id.release_date) TextView mReleaseDate;
+    Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details_layout);
 
-        //setting up the views
-
-        mMovieImage = (ImageView) findViewById(R.id.movie_image_detail);
-        mMovieTitle = (TextView) findViewById(R.id.movie_name_detail);
-        mMovieOverview = (TextView) findViewById(R.id.movie_overview);
-        mUserRating = (TextView) findViewById(R.id.user_rating);
-        mReleaseDate = (TextView) findViewById(R.id.release_date);
-
+        //injecting view with the ButterKnife Library, its so sweet
+        ButterKnife.inject(this);
 
         Intent intent = getIntent();
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
            movie = (Movie) intent.getSerializableExtra(Intent.EXTRA_TEXT);
-
             setUpContents(movie);
-
         }
     }
 
@@ -80,7 +75,10 @@ public class MovieDetails extends AppCompatActivity {
         String POSTER_PATH = movie.getPosterPath();
         Context context = MovieDetails.this;
         String imageUrl = BASE_URL.concat(IMAGE_SIZE).concat(POSTER_PATH);
-        Picasso.with(context).load(imageUrl).into(mMovieImage);
+        Picasso.with(context).load(imageUrl)
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.drawable.action_error)
+                .into(mMovieImage);
 
 
         mMovieTitle.setText(movie.getOriginalTitle());

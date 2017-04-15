@@ -28,6 +28,8 @@ import com.android.root.popularmovies.rest.ApiInterface;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,17 +37,18 @@ import retrofit2.Response;
 
 public class MainScreen extends AppCompatActivity implements MovieAdapter.OnListItemClickListener{
 
-    //please place your API KEY here,
-    private final static String API_KEY = "API_KEY_IN_HERE";
-
-
+    //please place your API KEY here
+    private final static String API_KEY = "API_KEY_HERE";
     public static final String SORT_KEY = "sort_by";
     private static final String POPULAR = "popular";
     private static final String TOP_RATED = "top_rated";
     private static final String POPULAR_MOVIE_TITLE = "Popular Movies";
     private static final String TOP_RATED_MOVIE_TITLE = "Top Rated Movies";
-    private RecyclerView mRecyclerView;
-    private ProgressBar mProgressBar;
+
+
+    @InjectView(R.id.movies_recyclerview) RecyclerView mRecyclerView;
+    @InjectView(R.id.progress_bar) ProgressBar mProgressBar;
+
     private MovieAdapter mMovieAdapter;
     private GridLayoutManager mGridLayoutManager;
     private SharedPreferences sharedPreferences;
@@ -58,10 +61,11 @@ public class MainScreen extends AppCompatActivity implements MovieAdapter.OnList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen_layout);
 
-        Context context = MainScreen.this;
 
-        mRecyclerView =(RecyclerView) findViewById(R.id.movies_recyclerview);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        //setting the ButterKnife Lib
+        ButterKnife.inject(this);
+
+        Context context = MainScreen.this;
         mRecyclerView.setHasFixedSize(true);
         mGridLayoutManager = new GridLayoutManager(context,3);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
