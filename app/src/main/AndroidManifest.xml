@@ -12,18 +12,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainScreen">
+        <activity
+            android:name=".activity.MainScreen"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MovieDetails"
+        <activity
+            android:name=".activity.MovieDetails"
+            android:theme="@style/AppTheme2"
             android:parentActivityName=".activity.MainScreen">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainScreen"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainScreen" />
         </activity>
+        <activity android:name=".activity.AndroidDatabaseManager">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
+            </activity>
+        <provider
+            android:authorities="com.android.root.popularmovies"
+            android:name=".data.MovieContentProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

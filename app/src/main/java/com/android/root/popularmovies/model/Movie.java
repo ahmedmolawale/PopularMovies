@@ -1,6 +1,7 @@
 
 package com.android.root.popularmovies.model;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
@@ -8,7 +9,8 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Movie implements Serializable {
+public class Movie implements Parcelable {
+
 
     @SerializedName("poster_path")
     @Expose
@@ -53,6 +55,76 @@ public class Movie implements Serializable {
     @Expose
     private double voteAverage;
 
+    private byte[] image;
+
+
+    public Movie(){
+        super();
+
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getPosterPath());
+        dest.writeString(String.valueOf(isAdult()));
+        dest.writeString(getOverview());
+        dest.writeString(getReleaseDate());
+        //dest.writeList(getGenreIds());
+        dest.writeInt(getId());
+        dest.writeString(getOriginalTitle());
+        dest.writeString(getOriginalLanguage());
+        dest.writeString(getTitle());
+        dest.writeString(getBackdropPath());
+        dest.writeDouble(getPopularity());
+        dest.writeInt(getVoteCount());
+        dest.writeString(String.valueOf(isVideo()));
+        dest.writeDouble(getVoteAverage());
+
+    }
+    public Movie(Parcel parcel){
+
+        setPosterPath(parcel.readString());
+        setAdult(Boolean.valueOf(parcel.readString()));
+        setOverview(parcel.readString());
+        setReleaseDate(parcel.readString());
+       // parcel.readList(genreIds,null);
+        setId(parcel.readInt());
+        setOriginalTitle(parcel.readString());
+        setOriginalLanguage(parcel.readString());
+        setTitle(parcel.readString());
+        setBackdropPath(parcel.readString());
+        setPopularity(parcel.readDouble());
+        setVoteCount(parcel.readInt());
+        setVideo(Boolean.valueOf(parcel.readString()));
+        setVoteAverage(parcel.readDouble());
+        if(image != null)
+        parcel.readByteArray(image);
+
+    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
     public String getPosterPath() {
         return posterPath;
     }
@@ -164,5 +236,6 @@ public class Movie implements Serializable {
     public void setVoteAverage(double voteAverage) {
         this.voteAverage = voteAverage;
     }
+
 
 }

@@ -14,6 +14,14 @@
                 android:id="@+id/menuSortTopRated"
                 android:title="@string/sort_top_rated"
                 />
+            <item
+                android:id="@+id/menuSortFavourite"
+                android:title="@string/sort_favourite"
+                />
+            <item
+                android:id="@+id/menuDb"
+                android:title="@string/open_db"
+                />
         </menu>
     </item>
 

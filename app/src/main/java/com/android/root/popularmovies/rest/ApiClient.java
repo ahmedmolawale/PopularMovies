@@ -28,7 +28,6 @@ public class ApiClient {
 
         if(retrofit == null) {
             //initializing the Retrofit builder, adding the base url and Converter to use
-
             retrofitBuilder = new Retrofit.Builder();
             retrofitBuilder.baseUrl(BASE_URL);
             retrofitBuilder.addConverterFactory(GsonConverterFactory.create());

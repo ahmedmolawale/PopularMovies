@@ -3,9 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_favourite"
+        android:title="@string/favourite"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_favorite_off"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_share"
         android:title="@string/share"
-        android:orderInCategory="1"
+        android:orderInCategory="200"
         android:icon="@drawable/action_share"
         app:showAsAction="ifRoom"/>
 

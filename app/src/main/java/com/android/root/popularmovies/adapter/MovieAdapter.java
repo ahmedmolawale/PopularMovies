@@ -1,16 +1,23 @@
 package com.android.root.popularmovies.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.root.popularmovies.R;
+import com.android.root.popularmovies.activity.MainScreen;
 import com.android.root.popularmovies.model.Movie;
+import com.android.root.popularmovies.utility.ImageUtility;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -23,17 +30,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     Context context;
     private final OnListItemClickListener mOnListItemClickListener;
 
-    public MovieAdapter(Context context, List<Movie> movies,OnListItemClickListener onListItemClickListener){
+    public MovieAdapter(Context context, List<Movie> movies, OnListItemClickListener onListItemClickListener) {
         this.context = context;
         this.movies = movies;
         this.mOnListItemClickListener = onListItemClickListener;
     }
 
     //interface to handle clicks
-
-    public interface OnListItemClickListener{
-
-         void onListItemClick(int position);
+    public interface OnListItemClickListener {
+        void onListItemClick(int position);
     }
 
     @Override
@@ -44,14 +49,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         boolean shouldAttachToParentImmediately = false;
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View movieItemView = layoutInflater.inflate(layoutIdOfMovieItem,parent,shouldAttachToParentImmediately);
+        View movieItemView = layoutInflater.inflate(layoutIdOfMovieItem, parent, shouldAttachToParentImmediately);
         MovieViewHolder movieViewHolder = new MovieViewHolder(movieItemView);
         return movieViewHolder;
     }
 
     @Override
     public void onBindViewHolder(MovieAdapter.MovieViewHolder holder, int position) {
-            holder.bind(position);
+        holder.bind(position);
     }
 
     @Override
@@ -59,12 +64,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return this.movies.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView movieImage;
         private TextView movieTitle;
 
-        public MovieViewHolder(View itemView){
+        public MovieViewHolder(View itemView) {
             super(itemView);
 
             movieImage = (ImageView) itemView.findViewById(R.id.movie_image);
@@ -73,17 +78,29 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
 
-        public void bind(int position){
+        public void bind(int position) {
+
             //getting the movie at the binding position
             Movie movie = movies.get(position);
             //setting the movie title and the movie image
             movieTitle.setText(movie.getOriginalTitle());
-            String BASE_URL = "http://image.tmdb.org/t/p/";
-            String IMAGE_SIZE = "w185/";
-            String POSTER_PATH = movie.getPosterPath();
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            String preference = sharedPreferences.getString(MainScreen.SORT_KEY, MainScreen.POPULAR);
+            if (preference.equals(MainScreen.FAVOURITE)) {
+                //load locally
+                Bitmap bitmap = ImageUtility.getImage(movie.getImage());
+                movieImage.setImageBitmap(bitmap);
+            } else {
 
-            String imageUrl =  BASE_URL.concat(IMAGE_SIZE).concat(POSTER_PATH);
-            Picasso.with(context).load(imageUrl).into(movieImage);
+                if (movie.getPosterPath() != null) {
+                    String BASE_URL = "http://image.tmdb.org/t/p/";
+                    String IMAGE_SIZE = "w185/";
+                    String POSTER_PATH = movie.getPosterPath();
+
+                    String imageUrl = BASE_URL.concat(IMAGE_SIZE).concat(POSTER_PATH);
+                    Picasso.with(context).load(imageUrl).into(movieImage);
+                }
+            }
         }
 
         @Override

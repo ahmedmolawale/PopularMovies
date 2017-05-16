@@ -1,9 +1,10 @@
 
 package com.android.root.popularmovies.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class Movies {
 
@@ -12,7 +13,7 @@ public class Movies {
     private int page;
     @SerializedName("results")
     @Expose
-    private List<Movie> results = null;
+    private ArrayList<Movie> results = null;
     @SerializedName("total_results")
     @Expose
     private int totalResults;
@@ -28,11 +29,11 @@ public class Movies {
         this.page = page;
     }
 
-    public List<Movie> getResults() {
+    public ArrayList<Movie> getResults() {
         return results;
     }
 
-    public void setResults(List<Movie> popularMovies) {
+    public void setResults(ArrayList<Movie> popularMovies) {
         this.results = popularMovies;
     }
 

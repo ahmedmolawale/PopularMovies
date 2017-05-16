@@ -5,8 +5,22 @@
     <string name="sort_popular">Most Popular</string>
     <string name="sort_top_rated">Highest Rated</string>
     <string name="sort_by">Sort By</string>
+    <string name="movie_synopsis_label">Synopsis</string>
     <string name="movie_overview">A very interesting movie with casts from Ibadan, Lagos, Osogbo, United State of America and many more</string>
-    <string name="user_rating">User Rating:</string>
-    <string name="release_date">Release Date:</string>
+    <string name="user_rating_label">User Rating</string>
+    <string name ="user_rating">6.5</string>
+    <string name="release_date_label">Released on</string>
+    <string name="release_date">31/07/2017</string>
     <string name="share">Share Movie</string>
+    <string name="title_activity_details">Details</string>
+    <string name="trailer_text">Trailer 1</string>
+    <string name="review_author_label">Author</string>
+    <string name="author_content">The movie is very nice svsmjvfjv slvnkjvnlfv
+    sfvkjnfvjnfvna
+    fvnlfdljbnvfnbkafb
+    dfbvznlsdnfbkjndkjendjvnldjf
+    dfvkzxlsndxkbnlszkdbn</string>
+    <string name="favourite">Favourite</string>
+    <string name="sort_favourite">Favourite</string>
+    <string name="open_db">Open Db</string>
 </resources>
