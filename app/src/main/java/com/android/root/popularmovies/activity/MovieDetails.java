@@ -79,6 +79,7 @@ public class MovieDetails extends AppCompatActivity {
             movie = intent.getParcelableExtra(Intent.EXTRA_TEXT);
 
             if(intent.hasExtra(MainScreen.IMAGE_POSTER_BYTE_ARRAY)) {
+                //offline view
                 byte[] image = intent.getByteArrayExtra(MainScreen.IMAGE_POSTER_BYTE_ARRAY);
                 setUp(movie, image);
 
@@ -121,8 +122,21 @@ public class MovieDetails extends AppCompatActivity {
         int itemId = item.getItemId();
         if (itemId == R.id.action_share) {
             String mimeType = "text/plain";
-            String title = "Share Movie";
-            String message = "Hey Buddy, Here is a movie you need to see: " + movie.getOriginalTitle();
+            String title;
+            String message;
+            //check whether movie has at least one trailer
+            //if so, get the first trailer
+            if(trailers != null && trailers.size()>0){
+                title = "Share Movie Trailer";
+                String link = "https://www.youtube.com/watch?v=" + trailers.get(0).getKey();
+                message = "Hey Buddy, Here is a movie you need to see. Watch the trailer here: " + link;
+            }else{
+
+                title = "Share Movie";
+                //just append the movie title
+                message = "Hey Buddy, Here is a movie you need to see: " + movie.getOriginalTitle();
+            }
+
 
             ShareCompat.IntentBuilder intentBuilder = ShareCompat.IntentBuilder.from(this);
             intentBuilder.setType(mimeType);
@@ -130,15 +144,11 @@ public class MovieDetails extends AppCompatActivity {
             intentBuilder.setText(message);
             intentBuilder.startChooser();
         } else if (itemId == R.id.action_favourite) {
-            //if movie in database, remove from favourite
             if (checkWhetherMovieIsFavourite(movie.getId())) {
                 //update movie and its trailers and reviews
                 //updateMovieDetails();
                 item.setIcon(R.drawable.ic_favorite_off);
-                //remove from favourite
-                Toast toast = Toast.makeText(getApplicationContext(), "Removed from favourites", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+
             } else {
                 insertMovieDetails();
                 item.setIcon(R.drawable.ic_favourite_on);
@@ -162,24 +172,10 @@ public class MovieDetails extends AppCompatActivity {
         }
     }
 
-    private void updateMovieDetails() {
-        ContentResolver contentResolver = getContentResolver();
-        ContentValues contentValues = new ContentValues();
-        //update incase the synopsis or rating has changed
-        contentValues.put(MovieContract.MovieEntry.COLUMN_MOVIE_SYNOPSIS, movie.getOverview());
-        contentValues.put(MovieContract.MovieEntry.COLUMN_MOVIE_RATING, String.valueOf(movie.getVoteAverage()));
-        String id = String.valueOf(movie.getId());
-        Uri uri = MovieContract.MovieEntry.CONTENT_URI.buildUpon().appendPath(id).build();
-        contentResolver.update(uri, contentValues, null, null);
-
-    }
-
     private void insertMovieDetails() {
         //get the poster
         Drawable drawable = mMovieImage.getDrawable();
         byte[] image = ImageUtility.getImageBytes(drawable);
-        Log.d("Image array",String.valueOf(image));
-        Toast.makeText(getApplicationContext(),"Here is the byte: "+ image,Toast.LENGTH_LONG).show();
         ContentResolver contentResolver = getContentResolver();
         ContentValues contentValues = new ContentValues();
         contentValues.put(MovieContract.MovieEntry.COLUMN_MOVIE_ID, movie.getId());

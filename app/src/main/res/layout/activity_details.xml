@@ -24,7 +24,7 @@
                 android:id="@+id/poster_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/ic_test"
+                android:background="@mipmap/ic_launcher"
                 android:contentDescription="@string/image_description"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"

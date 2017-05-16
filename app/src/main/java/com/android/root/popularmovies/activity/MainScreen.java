@@ -219,10 +219,6 @@ public class MainScreen extends AppCompatActivity implements MovieAdapter.OnList
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
             }
-        } else if (itemId == R.id.menuDb) {
-
-            startActivity(new Intent(MainScreen.this, AndroidDatabaseManager.class));
-
         }
         return true;
     }
